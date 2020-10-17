@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SignupActivity">
+    tools:context=".activity.SignupActivity">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/appCompatImageView2"
@@ -14,12 +14,11 @@
         android:src="@drawable/background_image_one_signup" />
 
     <TextView
-        android:layout_width="361dp"
-        android:layout_height="78dp"
-        android:layout_marginStart="8dp"
+        android:layout_width="0dp"
+        android:layout_height="98dp"
         android:layout_marginTop="100dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/register_now"
+        android:drawableBottom="@drawable/ic_baseline_cloud_24"
+        android:text="@string/create_account"
         android:textAlignment="center"
         android:textColor="@android:color/white"
         android:textSize="30sp"
@@ -38,17 +37,18 @@
         tools:layout_editor_absoluteY="0dp">
 
         <EditText
+            android:id="@+id/sign_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:autofillHints=""
             android:backgroundTint="@android:color/transparent"
             android:hint="@string/name"
             android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:autofillHints="" />
+            android:textColorHint="@android:color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -59,17 +59,18 @@
             android:background="#B1B1B1" />
 
         <EditText
+            android:id="@+id/sign_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:autofillHints=""
             android:backgroundTint="@android:color/transparent"
             android:hint="@string/email"
             android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:autofillHints="" />
+            android:textColorHint="@android:color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -80,17 +81,18 @@
             android:background="#B1B1B1" />
 
         <EditText
+            android:id="@+id/sign_pass"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
+            android:autofillHints=""
             android:backgroundTint="@android:color/transparent"
             android:hint="@string/password"
             android:inputType="textEmailAddress"
             android:padding="15dp"
             android:textColor="@android:color/white"
-            android:textColorHint="@android:color/white"
-            android:autofillHints="" />
+            android:textColorHint="@android:color/white" />
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -106,6 +108,7 @@
             android:layout_marginTop="10dp">
 
             <com.google.android.material.floatingactionbutton.FloatingActionButton
+                android:id="@+id/sign_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -115,6 +118,7 @@
                 android:layout_marginBottom="20dp"
                 android:backgroundTint="#4E525B"
                 android:elevation="0dp"
+                android:onClick="Signin"
                 android:src="@drawable/round_arrow_forward_24"
                 android:tint="@android:color/white"
                 app:elevation="0dp"
@@ -137,8 +141,8 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:layout_marginBottom="50dp">
+            android:layout_marginTop="50dp"
+            android:layout_marginBottom="0dp">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -146,9 +150,10 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerInParent="true"
                 android:layout_marginStart="30dp"
+                android:layout_marginBottom="20dp"
                 android:onClick="returnMainAct"
                 android:padding="15dp"
-                android:text="@string/sign_in"
+                android:text="@string/login"
                 android:textColor="@android:color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />

@@ -8,6 +8,29 @@
     android:layout_margin="8dp">
 
 
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.7" />
+        <ImageView
+            android:translationZ="10dp"
+            android:id="@+id/imageView2"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="@+id/iv_playlist_thumb"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/guideline"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/overlay_playlist" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -17,6 +40,7 @@
             android:layout_height="wrap_content">
 
             <ImageView
+                android:translationZ="1dp"
                 android:id="@+id/video_thumbnail"
                 android:layout_width="match_parent"
                 android:layout_height="180dp"
@@ -70,5 +94,6 @@
             android:visibility="gone" />
 
     </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

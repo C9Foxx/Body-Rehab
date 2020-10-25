@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -19,12 +20,13 @@ import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class AppActivity extends AppCompatActivity {
 
-    private HomeFragment homeFragment = new HomeFragment();
-    private PlaylistFragment playlistFragment = new PlaylistFragment();
-    private SearchFragment searchFragment = new SearchFragment();
+    private HomeFragment homeFragment;
+    private PlaylistFragment playlistFragment;
+    private SearchFragment searchFragment;
     private ProfileFragment profileFragment = new ProfileFragment();
 
     private BottomNavigationView menu;
+    private long user_id;
 
     private static final String TAG = "Body";
 
@@ -33,8 +35,16 @@ public class AppActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_app);
 
+        Intent intent = getIntent();
+
+        user_id = intent.getLongExtra(MainActivity.EXTRA_ID, 0);
+
+        homeFragment = HomeFragment.newInstance(user_id);
+        searchFragment =  SearchFragment.newInstance(user_id);
+        playlistFragment = PlaylistFragment.newInstance(user_id);
+
         menu = findViewById(R.id.bottomNavigationMenu);
-        setFragment(searchFragment);
+        setFragment(homeFragment);
         menu.setSelectedItemId(R.id.menu_home);
 
         menu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {

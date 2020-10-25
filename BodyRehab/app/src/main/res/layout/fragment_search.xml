@@ -8,40 +8,45 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_search"
-        android:layout_width="409dp"
-        android:layout_height="674dp"
-        android:layout_marginTop="6dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="5dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_search"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <EditText
-        android:id="@+id/input_query"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="8dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintBottom_toTopOf="@+id/recycler_search"
-        app:layout_constraintEnd_toStartOf="@+id/btn_search"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/btn_search"
-        android:layout_width="wrap_content"
-        android:drawableLeft="@drawable/ic_baseline_search_24"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:layout_marginEnd="50dp"
-        android:text="Search"
-        app:layout_constraintBottom_toBottomOf="@+id/input_query"
+        android:layout_width="45dp"
+        android:layout_height="53dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="6dp"
+        android:backgroundTint="#4E525B"
+        android:drawableStart="@drawable/ic_baseline_search_24"
+        android:textAllCaps="false"
+        android:textColor="#FFFFFF"
+        android:textColorHighlight="#4A4F58"
+        app:layout_constraintBottom_toTopOf="@+id/recycler_search"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/input_query"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/input_query"
+        android:layout_width="246dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:ems="10"
+        android:hint="Search Video..."
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toBottomOf="@+id/btn_search"
+        app:layout_constraintEnd_toStartOf="@+id/btn_search"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
 

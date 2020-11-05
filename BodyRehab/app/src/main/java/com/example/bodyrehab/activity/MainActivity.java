@@ -19,6 +19,8 @@ import com.example.bodyrehab.UserDB.UserDataBase;
 public class MainActivity extends AppCompatActivity {
 
     public static  final String EXTRA_ID = "com.example.intents.extra.ID";
+    public static  final String EXTRA_PLAYLIST = "com.example.intents.extra.playlist";
+    public static  final String EXTRA_STATE = "com.example.intents.extra.state";
 
     private EditText log_email;
     private EditText log_password;
@@ -56,16 +58,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
             else {
-                Toast.makeText(getApplicationContext(), "Wrong Password! " + user_pass + " " + pass, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "Wrong Password! ", Toast.LENGTH_LONG).show();
             }
         }
         else{
             Toast.makeText(getApplicationContext(), "No user found", Toast.LENGTH_LONG).show();
         }
 
-    }
-
-    public void ChangePass(View view) {
-        startActivity(new Intent(MainActivity.this, ChangePass.class));
     }
 }

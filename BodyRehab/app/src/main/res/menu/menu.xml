@@ -3,9 +3,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/menu_home"
-        android:icon="@drawable/ic_baseline_home_24"
-        android:title="@string/home"/>
+        android:id="@+id/menu_routine"
+        android:icon="@drawable/routine"
+        android:title="@string/routine"/>
     <item
         android:id="@+id/menu_playlist"
         android:icon="@drawable/ic_baseline_video_library_24"
@@ -16,6 +16,6 @@
         android:title="@string/search" />
     <item
         android:id="@+id/menu_profile"
-        android:icon="@drawable/ic_baseline_person_24"
-        android:title="@string/profile" />
+        android:icon="@drawable/ic_baseline_info_24"
+        android:title="@string/info" />
 </menu>

@@ -3,15 +3,20 @@ package com.example.bodyrehab.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -19,18 +24,22 @@ import androidx.room.Database;
 
 import com.example.bodyrehab.R;
 import com.example.bodyrehab.UserDB.Playlist;
+import com.example.bodyrehab.UserDB.Timer;
 import com.example.bodyrehab.UserDB.UserDataBase;
 import com.example.bodyrehab.UserDB.Video;
 import com.example.bodyrehab.activity.YTPlayerActivity;
 import com.example.bodyrehab.models.VideoClass;
 import com.example.bodyrehab.models.VideoYT;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+import static android.content.ContentValues.TAG;
+
+public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements AdapterView.OnItemClickListener {
 
     private Context context;
     private List<VideoYT> videoYTList;
@@ -38,6 +47,11 @@ public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     long id_playlist;
     private static final String TAG = "Picasso";
     private long user_id;
+    private AlertDialog.Builder dialogBuilder;
+    private AlertDialog dialog;
+    private ListView playlist_menu;
+
+
 
     private UserDataBase database;
 
@@ -46,6 +60,11 @@ public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder>
         this.context = context;
         this.videoYTList = videoYTList;
         this.user_id = user_id;
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
     }
 
     class YoutubeHolder extends RecyclerView.ViewHolder{
@@ -62,6 +81,8 @@ public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             add = itemView.findViewById(R.id.btn_add);
 
             database = UserDataBase.getINSTANCE(context);
+
+
 
             //playlists.add(new Playlist("Music"));
             //playlists.get(0).setCreator_id(user_id);
@@ -107,10 +128,7 @@ public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             add.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    List<Video> videoList = new ArrayList<>();
-                    videoList.add(new Video(getUrl, getThumbnail, getTitle));
-                    videoList.get(0).setContainer_id(4);
-                    database.getUserDao().InsertVideo(videoList);
+                    createNewSelectPlaylistDialog(getThumbnail, getTitle, getUrl);
                 }
             });
 
@@ -135,6 +153,51 @@ public class AdapterSearch extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @Override
     public int getItemCount() {
         return videoYTList.size();
+    }
+
+    public void createNewSelectPlaylistDialog(final String thumb, final String title, final String url){
+        dialogBuilder = new AlertDialog.Builder(context);
+        final View contactPopupView = LayoutInflater.from(context).inflate(R.layout.popup_add_video, null);
+        playlist_menu = (ListView) contactPopupView.findViewById(R.id.list);
+
+        final List<Playlist> playlists = database.getUserDao().loadUserPlaylits(user_id);
+        final List<String> playlist_names = new ArrayList<>();
+
+        for (Playlist playlist : playlists){
+            String name = playlist.getPlaylist_name();
+            Log.d(TAG, name);
+            playlist_names.add(name);
+        }
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, android.R.layout.simple_list_item_1, playlist_names);
+        playlist_menu.setAdapter(arrayAdapter);
+
+        dialogBuilder.setView(contactPopupView);
+        dialog = dialogBuilder.create();
+        dialog.show();
+
+        playlist_menu.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context, "Video added to playlist", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+                List<Video> videoList = new ArrayList<>();
+                Timer timer = new Timer(0,0,0,false);
+                videoList.add(new Video(url, thumb, title, timer));
+                Playlist playlist = playlists.get(position);
+                videoList.get(0).setContainer_id(playlist.getPlaylist_id());
+                int size = playlist.getSize();
+                playlist.setSize(size+1);
+                if(size == 0){
+                    playlist.setThumbnail(thumb);
+                }
+                database.getUserDao().UpdatePlaylistName(playlist);
+                database.getUserDao().InsertVideo(videoList);
+            }
+        });
+
+
+
     }
 
 }

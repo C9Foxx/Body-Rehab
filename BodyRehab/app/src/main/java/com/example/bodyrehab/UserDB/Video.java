@@ -1,6 +1,8 @@
 package com.example.bodyrehab.UserDB;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
+import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
 import com.example.bodyrehab.models.VideoYT;
@@ -16,10 +18,22 @@ public class Video {
     private String video_thumbnail;
     private String video_title;
 
-    public Video(String video_url, String video_thumbnail, String video_title) {
+    @Embedded
+    private Timer timer;
+
+/*
+    @ForeignKey(
+            entity = Playlist.class,
+            parentColumns = "playlist_id",
+            childColumns = "container_id",
+            onDelete = ForeignKey.CASCADE
+    )*/
+
+    public Video(String video_url, String video_thumbnail, String video_title, Timer timer) {
         this.video_url = video_url;
         this.video_thumbnail = video_thumbnail;
         this.video_title = video_title;
+        this.timer = timer;
     }
 
     public long getVideo_id() {
@@ -60,5 +74,13 @@ public class Video {
 
     public void setVideo_title(String video_title) {
         this.video_title = video_title;
+    }
+
+    public Timer getTimer() {
+        return timer;
+    }
+
+    public void setTimer(Timer timer) {
+        this.timer = timer;
     }
 }

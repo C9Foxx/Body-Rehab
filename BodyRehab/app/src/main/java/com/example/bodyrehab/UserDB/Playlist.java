@@ -13,7 +13,8 @@ public class Playlist implements Serializable {
 
     private long creator_id;
     private String playlist_name;
-    private int size;
+    private int size = 0;
+    private String thumbnail = "";
 
     public Playlist(String playlist_name) {
         this.playlist_name = playlist_name;
@@ -50,4 +51,8 @@ public class Playlist implements Serializable {
     public void setSize(int size) {
         this.size = size;
     }
+
+    public String getThumbnail() {return thumbnail; }
+
+    public void setThumbnail(String thumbnail) {this.thumbnail = thumbnail; }
 }

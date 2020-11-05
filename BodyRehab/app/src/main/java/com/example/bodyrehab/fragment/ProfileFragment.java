@@ -28,10 +28,6 @@ import java.util.List;
  */
 public class ProfileFragment extends Fragment {
 
-    private static final String TAG = "Picasso";
-    private EditText id, playlist_name;
-
-    private UserDataBase userDataBase;
 
 
     public ProfileFragment() {
@@ -53,30 +49,6 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-
-        userDataBase = UserDataBase.getINSTANCE(getActivity());
-        id = rootView.findViewById(R.id.find_id);
-        playlist_name = rootView.findViewById(R.id.search_name);
-        Button btn_find = rootView.findViewById(R.id.btn_find);
-
-        btn_find.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                long user_id = Integer.parseInt(id.getText().toString());
-                String name = playlist_name.getText().toString();
-                Playlist playlist = userDataBase.getUserDao().SearchPlaylistByName(user_id, name);
-                Toast.makeText(getContext(), playlist.getPlaylist_name(), Toast.LENGTH_SHORT).show();
-                /*
-                UserWithPlaylistsAndSongs userWithPlaylistsAndSongs = userDataBase.getUserDao().SearchPlaylistsByUser(user_id);
-                for (PlaylistWithVideos playlist : userWithPlaylistsAndSongs.playlists) {
-                    Log.d(TAG, String.valueOf(playlist.getPlaylist().getPlaylist_name()));
-                    for (Video video : playlist.videos){
-                        Log.d(TAG, String.valueOf(video.getVideo_title()));
-                    }
-                }*/
-            }
-        });
-
         return rootView;
     }
 }

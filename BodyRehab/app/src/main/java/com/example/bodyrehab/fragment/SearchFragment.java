@@ -72,7 +72,7 @@ public class SearchFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER);
+        getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_search, container, false);
@@ -99,7 +99,7 @@ public class SearchFragment extends Fragment {
                     imm.hideSoftInputFromWindow(getView().getWindowToken(), 0);
                 }
                 else {
-                    Toast.makeText(getContext(), "Enter a search", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Enter search word", Toast.LENGTH_SHORT).show();
                 }
             }
         });

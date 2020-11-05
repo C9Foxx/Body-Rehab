@@ -6,10 +6,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -121,7 +119,7 @@ public class PlaylistFragment extends Fragment {
         final View contactPopupView = LayoutInflater.from(getContext()).inflate(R.layout.popup_add_playlist, null);
 
         playlist_name = (EditText) contactPopupView.findViewById(R.id.playlist_name);
-        btn_done = (Button) contactPopupView.findViewById(R.id.btn_done);
+        btn_done = (Button) contactPopupView.findViewById(R.id.btn_select_playlist);
 
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();

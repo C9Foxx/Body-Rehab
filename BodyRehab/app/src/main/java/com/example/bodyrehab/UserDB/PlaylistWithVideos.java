@@ -5,6 +5,8 @@ import androidx.room.Relation;
 
 import java.util.List;
 
+import retrofit2.http.DELETE;
+
 public class PlaylistWithVideos {
 
     @Embedded

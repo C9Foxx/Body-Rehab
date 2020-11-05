@@ -17,11 +17,6 @@
             android:theme="@style/AppTheme">
         </activity>
         <activity
-            android:name=".activity.ChangePass"
-            android:theme="@style/StartTheme"
-            android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity
             android:name=".activity.SignupActivity"
             android:theme="@style/StartTheme"
             android:screenOrientation="portrait"

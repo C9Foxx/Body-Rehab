@@ -27,6 +27,8 @@ public class AppActivity extends AppCompatActivity {
 
     private BottomNavigationView menu;
     private long user_id;
+    private String user_playlist;
+    private boolean state = false;
 
     private static final String TAG = "Body";
 
@@ -37,15 +39,24 @@ public class AppActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
+        if(intent.hasExtra(MainActivity.EXTRA_PLAYLIST) && intent.hasExtra(MainActivity.EXTRA_STATE)){
+            //Log.w(TAG, "asi es carnal");
+            String name = intent.getStringExtra(MainActivity.EXTRA_PLAYLIST);
+            user_playlist = name;
+        }
+        else {
+            user_playlist = "";
+        }
+
         user_id = intent.getLongExtra(MainActivity.EXTRA_ID, 0);
 
-        homeFragment = HomeFragment.newInstance(user_id);
+        homeFragment = HomeFragment.newInstance(user_id, user_playlist);
         searchFragment =  SearchFragment.newInstance(user_id);
         playlistFragment = PlaylistFragment.newInstance(user_id);
 
         menu = findViewById(R.id.bottomNavigationMenu);
-        setFragment(homeFragment);
-        menu.setSelectedItemId(R.id.menu_home);
+        setFragment(profileFragment);
+        menu.setSelectedItemId(R.id.menu_profile);
 
         menu.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override

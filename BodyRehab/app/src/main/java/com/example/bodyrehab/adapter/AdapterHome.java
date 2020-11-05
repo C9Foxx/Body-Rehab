@@ -12,12 +12,14 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bodyrehab.R;
 import com.example.bodyrehab.UserDB.Playlist;
+import com.example.bodyrehab.UserDB.PlaylistWithVideos;
 import com.example.bodyrehab.UserDB.UserDataBase;
 import com.example.bodyrehab.UserDB.Video;
 import com.example.bodyrehab.activity.YTPlayerActivity;
@@ -32,12 +34,13 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private Context context;
     private List<Video> videoList;
-    private static final String TAG = "Picasso";
     private long user_id;
+
+    private static final String TAG = "Picasso";
     private AlertDialog.Builder dialogBuilder;
     private AlertDialog dialog;
     private EditText newTitle;
-    private Button btn_delete, btn_change_title, btn_exit;
+    private Button btn_delete, btn_change_title;
     private CheckBox check_delete, check_title;
 
     private UserDataBase database;
@@ -96,6 +99,8 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     Intent i = new Intent(context, YTPlayerActivity.class);
                     i.putExtra("video_id", data.getVideo_url());
                     i.putExtra("video_title", getTitle);
+                    i.putExtra("user_id", user_id);
+                    i.putExtra("video_info", data.getVideo_id());
                     context.startActivity(i);
                 }
             });
@@ -103,7 +108,8 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             video_settings.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    createNewVideoSettingDialog();
+                    int position = getAdapterPosition();
+                    createNewVideoSettingDialog(position);
                 }
             });
 
@@ -133,7 +139,7 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         return videoList.size();
     }
 
-    public void createNewVideoSettingDialog(){
+    public void createNewVideoSettingDialog(final int position){
         dialogBuilder = new AlertDialog.Builder(context);
         final View contactPopupView = LayoutInflater.from(context).inflate(R.layout.popup_vid_set, null);
 
@@ -146,6 +152,39 @@ public class AdapterHome extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         dialogBuilder.setView(contactPopupView);
         dialog = dialogBuilder.create();
         dialog.show();
+
+        btn_change_title.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(check_title.isChecked()) {
+                    String name = newTitle.getText().toString();
+                    videoList.get(position).setVideo_title(name);
+                    database.getUserDao().UpdateVideoTitle(videoList.get(position));
+                    Toast.makeText(context, "Video Updated", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    notifyDataSetChanged();
+                }
+            }
+        });
+
+        btn_delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(check_delete.isChecked()){
+                    Video video = videoList.get(position);
+                    videoList.remove(position);
+                    database.getUserDao().DeleteVideo(video);
+                    Playlist videosPlaylist = database.getUserDao().SearchPlaylistByVideo(video.getContainer_id());
+                    PlaylistWithVideos playlistWithVideos = database.getUserDao().LoadVideosOnPlaylist(user_id, videosPlaylist.getPlaylist_name());
+                    int size = playlistWithVideos.videos.size();
+                    videosPlaylist.setSize(size);
+                    database.getUserDao().UpdatePlaylistName(videosPlaylist);
+                    Toast.makeText(context, "Video Deleted", Toast.LENGTH_SHORT).show();
+                    dialog.dismiss();
+                    notifyDataSetChanged();
+                }
+            }
+        });
 
     }
 }

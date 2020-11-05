@@ -48,7 +48,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/textViewDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:padding="10dp"
